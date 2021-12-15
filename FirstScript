@@ -1,0 +1,95 @@
+--// First Test Script //--
+
+getgenv().autoTap = false
+getgenv().autoRebirth = false
+getgenv().buyEgg = false
+getgenv().autoEquip = false
+
+local remotePath = game:GetService("ReplicatedStorage").Events.Server
+
+function doTap()
+    spawn(function() 
+        while autoTap == true do
+            remotePath.RegisterClick:InvokeServer()
+         end
+    end)
+end
+
+function autoRebirth()
+    spawn(function() 
+        while getgenv().autoRebirth == true do
+            local args = {[1] = 500} -- Change to whatever number
+            remotePath.RequestRebirth:InvokeServer(unpack(args))
+         end
+    end)
+end
+
+function buyEgg()
+    spawn(function() 
+        while wait() do
+            if not getgenv().buyEgg then break end
+            local args = {[1] = "5",[2] = 1} -- 1 [Starter egg], 2 [Basic egg] etc
+            remotePath.OpenEgg:InvokeServer(unpack(args))
+         end
+    end)
+end
+
+function autoEquip()
+    spawn(function() 
+        while wait() do
+            if not getgenv().autoEquip then break end
+            remotePath.RequestEquipBest:InvokeServer()
+         end
+    end)
+end
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("Clicking Champions")
+
+local b = w:CreateFolder("AutoFarm")
+
+local c = w:CreateFolder("Misc")
+
+b:Toggle("Auto Clicker",function(bool)
+    getgenv().autoTap = bool
+    print(shared.toggle)
+    if bool then
+        doTap()
+    end
+end)
+
+b:Toggle("Auto Rebirth",function(bool)
+    getgenv().autoRebirth = bool
+    print(shared.toggle)
+    if bool then
+        autoRebirth()
+    end
+end)
+
+c:Toggle("Auto Egg",function(bool)
+    getgenv().buyEgg = bool
+    print(shared.toggle)
+    if bool then
+        buyEgg()
+    end
+end)
+
+c:Toggle("Auto Equip",function(bool)
+    getgenv().autoEquip = bool
+    print(shared.toggle)
+    if bool then
+        autoEquip()
+    end
+end)
+
+b:DestroyGui()
+
+spawn(function() -- Anti AFK
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    end) 
+end)
