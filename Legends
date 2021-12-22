@@ -2,7 +2,7 @@
  
 getgenv().collectHoopsToggle = false
 getgenv().collectOrbsToggle = false
-getgenv().autoRebirth = true
+getgenv().autoRebirth = false
 
 function collectHoopsToggle() -- Auto Collects Hoops
     spawn(function()
