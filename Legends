@@ -30,7 +30,7 @@ function collectOrbsToggle() -- Auto Collects Orbs
                 if v.Name == "TouchInterest" and v.Parent then
                     -- Fire the Touch Interest
                     firetouchinterest(playerHead, v.Parent, 1)
-                    wait(0.01)
+                    wait(0.1)
                     firetouchinterest(playerHead, v.Parent, 0)
                 end
             end
